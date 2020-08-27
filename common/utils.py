@@ -190,7 +190,7 @@ class ApiBuilder:
         elif response.status_code == 400:
             return [{'error': response.text}], DEFAULT_EMPTY_RES
         else:
-            return [{'error': 'Unable to get Employees from External Source'}], DEFAULT_EMPTY_RES
+            return [{'error': 'Unable to get Employees'}], DEFAULT_EMPTY_RES
 
     def __perform_departments_request(self, department_id=None):
         if department_id is None:
@@ -227,8 +227,8 @@ class ApiBuilder:
 
             if perform_request_type == EMPLOYEES_REQUEST:
                 employee_id = kwargs.pop('employee_id', None)
-                err_msg, items = self.__peform_employees_request(query=query, employee_id=employee_id)
-                res = copy.copy(items)
+                err_msg, res = self.__peform_employees_request(query=query, employee_id=employee_id)
+                items = copy.deepcopy(res)
                 if err_msg[0]['error'] == '':
                     err_msg, self.managers = self.__get_all_managers(items)
             elif perform_request_type == DEPARTMENTS_REQUEST:
