@@ -49,7 +49,6 @@ class DepartmentRepository(BaseDepartmentRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            # return ApiHandler(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST, department_id=self.department_id)
             return DepartmentMapper(req=self.req).get_by_id(id=self.department_id)
         return err_msg
 
@@ -62,6 +61,5 @@ class DepartmentsRepository(BaseDepartmentRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            # return ApiHandler(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST)
             return DepartmentMapper(req=self.req).get_all()
         return err_msg
