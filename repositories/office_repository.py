@@ -1,8 +1,5 @@
-from common.utils import ApiBuilder
-from common.utils import (
-    OFFICES_REQUEST,
-    DEFAULT_ERR_MSG
-)
+from mappers.office_mapper import OfficeMapper
+from mappers.constants import DEFAULT_ERR_MSG
 from repositories import BaseRepository
 
 
@@ -29,7 +26,8 @@ class OfficeRepository(BaseOfficeRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            return ApiBuilder(req=self.req)(perform_request_type=OFFICES_REQUEST, office_id=self.office_id)
+            # return ApiHandler(req=self.req)(perform_request_type=OFFICES_REQUEST, office_id=self.office_id)
+            return OfficeMapper().get_by_id(id=self.office_id)
         return err_msg
 
 
@@ -41,5 +39,6 @@ class OfficesRepository(BaseOfficeRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            return ApiBuilder(req=self.req)(perform_request_type=OFFICES_REQUEST)
+            # return ApiHandler(req=self.req)(perform_request_type=OFFICES_REQUEST)
+            return OfficeMapper().get_all()
         return err_msg

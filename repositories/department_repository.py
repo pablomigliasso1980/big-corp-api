@@ -1,6 +1,5 @@
-from common.utils import ApiBuilder
-from common.utils import (
-    DEPARTMENTS_REQUEST,
+from mappers.department_mapper import DepartmentMapper
+from mappers.constants import (
     VALID_ARGS,
     SUPER_DEPARTMENT_EXPANDED_RELATIONSHIP,
     EXPAND_ARG,
@@ -50,7 +49,8 @@ class DepartmentRepository(BaseDepartmentRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            return ApiBuilder(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST, department_id=self.department_id)
+            # return ApiHandler(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST, department_id=self.department_id)
+            return DepartmentMapper(req=self.req).get_by_id(id=self.department_id)
         return err_msg
 
 
@@ -62,5 +62,6 @@ class DepartmentsRepository(BaseDepartmentRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.validate_args()
         if err_msg[0]['error'] == '':
-            return ApiBuilder(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST)
+            # return ApiHandler(req=self.req)(perform_request_type=DEPARTMENTS_REQUEST)
+            return DepartmentMapper(req=self.req).get_all()
         return err_msg

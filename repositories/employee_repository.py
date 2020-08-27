@@ -1,6 +1,5 @@
-from common.utils import ApiBuilder
-from common.utils import (
-    EMPLOYEES_REQUEST,
+from mappers.employee_mapper import EmployeeMapper
+from mappers.constants import (
     VALID_ARGS,
     DEFAULT_ERR_MSG
 )
@@ -31,7 +30,7 @@ class EmployeeRepository(BaseRepository):
     def __call__(self, *args, **kwargs):
         err_msg = self.__validate_args()
         if err_msg[0]['error'] == '':
-            return ApiBuilder(req=self.req)(perform_request_type=EMPLOYEES_REQUEST, employee_id=self.employee_id)
+            return EmployeeMapper(req=self.req).get_by_id(id=self.employee_id)
         return err_msg
 
 
@@ -44,4 +43,4 @@ class EmployeesRepository(BaseRepository):
         return self.validate_args()
 
     def __call__(self, *args, **kwargs):
-        return ApiBuilder(req=self.req)(perform_request_type=EMPLOYEES_REQUEST)
+        return EmployeeMapper(req=self.req).get_all()
