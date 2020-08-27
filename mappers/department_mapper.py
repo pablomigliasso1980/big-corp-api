@@ -31,7 +31,7 @@ class DepartmentMapper(BaseMapper, ExpandableMapper):
         if err_msg[0]['error'] != '':
             return err_msg
 
-        items = self.__by_id(id)
+        items = copy.deepcopy(self.__by_id(id))
 
         return self.__get_departments(items)
 
